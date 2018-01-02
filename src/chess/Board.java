@@ -29,6 +29,21 @@ public class Board {
         chessBoard[pos[0]][pos[1]]=piece;
     }
 
+    public boolean Bleft(){//check if any black pieces left
+        for(Map.Entry<String, Piece>stringPieceEntry : pieceMap.entrySet()){
+            if(stringPieceEntry.getKey().charAt(0)=='B')
+                return true;
+        }
+        return false;
+    }
+
+    public boolean Rleft(){//check if any red pieces left
+        for(Map.Entry<String, Piece>stringPieceEntry : pieceMap.entrySet()){
+            if(stringPieceEntry.getKey().charAt(0)=='R')
+                return true;
+        }
+        return false;
+    }
 
 
 }
