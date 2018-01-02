@@ -3,8 +3,8 @@ package chess;
 import java.util.Map;
 
 public class Board {
-    public int BOARD_WIDTH;
-    public int BOARD_HEIGHT;
+    public int BOARD_WIDTH =200;
+    public int BOARD_HEIGHT =100;
     public Map<String, Piece> pieceMap;
     private Piece[][] chessBoard = new Piece[BOARD_HEIGHT][BOARD_WIDTH];
     public Board(int BOARD_WIDTH, int BOARD_HEIGHT){
