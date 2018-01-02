@@ -9,12 +9,12 @@ public class Piece {
     public int PW;//power
     public int MV;//Movement
     public char index;
-    public Piece(String input, int[] position){
+    public Piece(String name, int[] position){
         /*
         color: R for player 1; B for player 2;
          */
-        this.color = input.charAt(0);
-        this.index = input.charAt(1);
+        this.color = name.charAt(0);
+        this.index = name.charAt(1);
         this.position=position;
 
     }
@@ -34,9 +34,10 @@ public class Piece {
     public void setPW(int PW){
         this.PW = PW;
     }
-    
-    public void setMV(int MV){
-        this.MV = MV;   
+
+    public void setMV(int MV)
+    {
+        this.MV = MV;
     }
 
 }
