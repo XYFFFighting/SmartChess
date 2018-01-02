@@ -7,6 +7,7 @@ import control.ChessController;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.Map;
 
 public class BoardView {
@@ -16,7 +17,9 @@ public class BoardView {
     private final int PIECE_HEIGHT = 67;
     private ChessController controller;
     private Board board;
-
+    private JLayeredPane pane;
+    private Map<String, JLabel> pieceSets = new HashMap<String, JLabel>();
+    private JFrame frame;
 
     public BoardView(ChessController chessController){
         controller = chessController;
@@ -24,8 +27,8 @@ public class BoardView {
 
     public void init(Board board){
         JLabel BackGround = new JLabel(new ImageIcon("img/board.png"));
-        JFrame frame= new JFrame("RPG Chess");
-        JLayeredPane pane = new JLayeredPane();
+        frame= new JFrame("RPG Chess");
+        pane = new JLayeredPane();
         this.board = board;
         Map<String, Piece> piece = board.pieceMap;
 
@@ -47,6 +50,7 @@ public class BoardView {
             chess.setLocation(pos[0],pos[1]);
             chess.setSize(PIECE_WIDTH,PIECE_HEIGHT);
             chess.addMouseListener(new PieceMouseListener(name));
+            pieceSets.put(name,chess);
             pane.add(chess,0);
 
         }
@@ -67,12 +71,22 @@ public class BoardView {
 
     class PieceMouseListener extends MouseAdapter{
         private String name;
-        PieceMouseListener(String name){
-            this.name = name;
-        }
+        PieceMouseListener(String name){ this.name = name; }
 
         @Override
         public void mousePressed(MouseEvent e) {
+            //select
+
+
+            //move
+            //check valid
+            //remove
+            pane.remove(pieceSets.get(name));
+            //show new
+
+
+            //attack
+
             System.out.println(name);
         }
     }
