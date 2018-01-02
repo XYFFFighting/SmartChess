@@ -14,7 +14,12 @@ public class GameMain {
         view.init(board);
     }
 
+    public void run(){
+        while(controller.End(board)){
 
+
+        }
+    }
 
     public static void main(String[] args) {
         GameMain main = new GameMain();
