@@ -31,7 +31,11 @@ public class Board {
         pieceMap.remove(name);
         pieceMap.put(name, oldPiece);
         //need to check if kill some chess here
-
+        //change next move
+        if(player=='R')
+            player='B';
+        else
+            player='R';
 
     }
 

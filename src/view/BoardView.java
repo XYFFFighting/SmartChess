@@ -71,9 +71,10 @@ public class BoardView {
                 //move on graph
                 int[] selectPosition = board.pieceMap.get(selected).position;
                 int[] pos = new int[]{e.getX(),e.getY()};
-                MoveChess(selected,pos);
                 //update position in board
                 board.updatePosition(selected,pos);
+                MoveChess(selected,pos);
+
 
 
             }
@@ -83,6 +84,7 @@ public class BoardView {
     public void MoveChess(String name, int[] pos){
         JLabel piece = pieceSets.get(name);
         piece.setLocation(pos[0],pos[1]);
+        selected=null;
     }
 
     class PieceMouseListener extends MouseAdapter{
@@ -102,7 +104,6 @@ public class BoardView {
             }
 
 
-            selected = name;
             System.out.println(name);
         }
     }
