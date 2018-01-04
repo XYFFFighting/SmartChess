@@ -17,11 +17,10 @@ public class GameMain {
     public void run(){
         while(controller.End(board)){
 
-
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         GameMain main = new GameMain();
         main.set();
     }

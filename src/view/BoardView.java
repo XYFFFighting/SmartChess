@@ -11,28 +11,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardView {
-    private final int WIDTH = 1400;
-    private final int HEIGHT = 700;
-    private final int PIECE_WIDTH = 67;
-    private final int PIECE_HEIGHT = 67;
+    private final int WIDTH = 1440;
+    private final int HEIGHT = 760;
+    private final int PIECE_WIDTH = 38;
+    private final int PIECE_HEIGHT = 38;
     private ChessController controller;
     private Board board;
     private JLayeredPane pane;
     private Map<String, JLabel> pieceSets = new HashMap<String, JLabel>();
     private JFrame frame;
-
+    private JLabel BackGround;
+    private String selected;
     public BoardView(ChessController chessController){
-        controller = chessController;
+        this.controller = chessController;
     }
 
-    public void init(Board board){
-        JLabel BackGround = new JLabel(new ImageIcon("img/board.png"));
+    public void init(final Board board){
+        this.board = board;
+        BackGround = new JLabel(new ImageIcon("img/board.png"));
         frame= new JFrame("RPG Chess");
         pane = new JLayeredPane();
-        this.board = board;
         Map<String, Piece> piece = board.pieceMap;
 
         frame.setSize(WIDTH,HEIGHT);
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         frame.add(pane);
@@ -47,7 +49,7 @@ public class BoardView {
             Piece piece1 = stringPieceEntry.getValue();
             int[] pos = piece1.position;
             JLabel chess = new JLabel(new ImageIcon("img/"+name.substring(0,1)+".png"));
-            chess.setLocation(pos[0],pos[1]);
+            chess.setLocation(pos[0]*7,pos[1]*7);
             chess.setSize(PIECE_WIDTH,PIECE_HEIGHT);
             chess.addMouseListener(new PieceMouseListener(name));
             pieceSets.put(name,chess);
@@ -60,13 +62,27 @@ public class BoardView {
         frame.setVisible(true);
     }
 
-    //not yet finish
     class BackGroundMouseListener extends MouseAdapter{
         @Override
         public void mousePressed(MouseEvent e) {
             //super.mousePressed(e);
-            System.out.println(e.getX() + " " + e.getY());
+            //System.out.println(e.getX() + " " + e.getY());
+            if(selected!=null){//something is selected
+                //move on graph
+                int[] selectPosition = board.pieceMap.get(selected).position;
+                int[] pos = new int[]{e.getX(),e.getY()};
+                MoveChess(selected,pos);
+                //update position in board
+                board.updatePosition(selected,pos);
+
+
+            }
         }
+    }
+
+    public void MoveChess(String name, int[] pos){
+        JLabel piece = pieceSets.get(name);
+        piece.setLocation(pos[0],pos[1]);
     }
 
     class PieceMouseListener extends MouseAdapter{
@@ -75,18 +91,18 @@ public class BoardView {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            //select
+            //if selected and click other chess, kill
+            if(selected!=null&&name.charAt(0)!=board.player){
+                //need to -HP based on PW
+            }
+            else if(name.charAt(0)==board.player){
+                //select
+                selected = name;
+                //need to have a square to indicate selected
+            }
 
 
-            //move
-            //check valid
-            //remove
-            pane.remove(pieceSets.get(name));
-            //show new
-
-
-            //attack
-
+            selected = name;
             System.out.println(name);
         }
     }

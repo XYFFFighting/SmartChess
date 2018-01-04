@@ -38,6 +38,8 @@ public class ChessController {
         return board;
     }
 
+
+
     public boolean End(Board board){
         if(board.Bleft()||board.Rleft())
             return false;
