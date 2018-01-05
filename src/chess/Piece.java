@@ -3,11 +3,11 @@ package chess;
 public class Piece {
     public char color;
     public int[] position = new int[2];
-    public int HP;//health
-    public int SD;//speed
-    public int RG;//range
-    public int PW;//power
-    public int MV;//Movement
+    public int HP=100;//health
+    public int SD=10;//speed
+    public int RG=1;//range
+    public int PW=1;//power
+    public int MV=10;//Movement
     public char index;
     public Piece(String name, int[] position){
         /*

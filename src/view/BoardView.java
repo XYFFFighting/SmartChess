@@ -5,6 +5,7 @@ import chess.Piece;
 import control.ChessController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 public class BoardView {
     private final int WIDTH = 1440;
-    private final int HEIGHT = 760;
+    private final int HEIGHT = 800;
     private final int PIECE_WIDTH = 38;
     private final int PIECE_HEIGHT = 38;
     private ChessController controller;
@@ -25,7 +26,12 @@ public class BoardView {
     public BoardView(ChessController chessController){
         this.controller = chessController;
     }
-
+    private JButton Move;
+    private JButton Attack;
+    private JButton Property;
+    private JPanel bottom;
+    private JFrame property;
+    private JPanel PROPERTY;
     public void init(final Board board){
         this.board = board;
         BackGround = new JLabel(new ImageIcon("img/board.png"));
@@ -38,6 +44,21 @@ public class BoardView {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         frame.add(pane);
+
+        bottom = new JPanel(new GridBagLayout());
+        bottom.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        bottom.setSize(new Dimension(WIDTH,40));
+
+        Move = new JButton("Move");
+        Attack = new JButton("Attack");
+        Property = new JButton("Property");
+        Property.addMouseListener(new ShowPropertyWindow());
+
+        bottom.add(Move);
+        bottom.add(Attack);
+        bottom.add(Property);
+        bottom.setLocation(0,730);
+        pane.add(bottom);
 
         BackGround.setSize(WIDTH,HEIGHT);
         BackGround.setLocation(0,0);
@@ -58,9 +79,40 @@ public class BoardView {
         }
 
 
+
         frame.setResizable(false);
         frame.setVisible(true);
     }
+
+
+
+    class ShowPropertyWindow extends MouseAdapter{
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if(selected!=null){
+                //frame.setEnabled(false);
+                property = new JFrame("Property");
+                PROPERTY = new JPanel(new GridLayout(0,1));
+                property.setSize(350,550);
+                PROPERTY.setSize(300,500);
+                property.add(PROPERTY);
+                JLabel HP = new JLabel("Health Power: "+board.pieceMap.get(selected).HP);
+                JLabel SD = new JLabel("Speed: "+board.pieceMap.get(selected).SD);
+                JLabel RG = new JLabel("Range: "+board.pieceMap.get(selected).RG);
+                JLabel PW = new JLabel("Power: "+board.pieceMap.get(selected).PW);
+                JLabel MV = new JLabel("Movement: "+board.pieceMap.get(selected).MV);
+                PROPERTY.add(HP);
+                PROPERTY.add(SD);
+                PROPERTY.add(RG);
+                PROPERTY.add(PW);
+                PROPERTY.add(MV);
+                property.setVisible(true);
+                property.setAlwaysOnTop(true);
+                property.setLocationRelativeTo(null);
+            }
+        }
+    }
+
 
     class BackGroundMouseListener extends MouseAdapter{
         @Override
