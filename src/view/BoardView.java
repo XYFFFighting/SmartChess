@@ -107,7 +107,7 @@ public class BoardView {
                 PROPERTY.add(PW);
                 PROPERTY.add(MV);
                 property.setVisible(true);
-                property.setAlwaysOnTop(true);
+                //property.setAlwaysOnTop(true);
                 property.setLocationRelativeTo(null);
             }
         }
