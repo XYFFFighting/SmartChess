@@ -5,8 +5,8 @@ import view.BoardView;
 import java.util.Map;
 
 public class Board {
-    public int BOARD_WIDTH=201;//200
-    public int BOARD_HEIGHT=101;//100
+    public int BOARD_WIDTH=1420;//200
+    public int BOARD_HEIGHT=720;//100
     public Map<String, Piece> pieceMap;
     public char player='R';
     public BoardView boardView;

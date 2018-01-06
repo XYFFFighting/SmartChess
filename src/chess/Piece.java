@@ -7,7 +7,7 @@ public class Piece {
     public int SD=10;//speed
     public int RG=1;//range
     public int PW=1;//power
-    public int MV=10;//Movement
+    public int MV=1;//Movement
     public char index;
     public Piece(String name, int[] position){
         /*

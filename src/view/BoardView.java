@@ -29,7 +29,7 @@ public class BoardView {
     public String Sequence[];
     public int order = 0;
     public BoardView(ChessController chessController){
-        this.controller = chessController;
+        controller = chessController;
     }
     private JButton Move;
     private JButton Attack;
@@ -39,6 +39,7 @@ public class BoardView {
     private JPanel PROPERTY;
     private JButton Skip;
     private JLabel kuang;
+    private JLabel MoveKuang;
     private Map<String, Piece> piece;
     public void init(final Board board){
         this.board = board;
@@ -75,14 +76,14 @@ public class BoardView {
         BackGround.setSize(WIDTH,HEIGHT);
         BackGround.setLocation(0,0);
         BackGround.addMouseListener(new BackGroundMouseListener());
-        pane.add(BackGround,1);
+        pane.add(BackGround,2);
         for(Map.Entry<String, Piece>stringPieceEntry : piece.entrySet()){
             String name = stringPieceEntry.getKey();
             Piece piece1 = stringPieceEntry.getValue();
             int[] pos = piece1.position;
             JLabel chess = new JLabel(new ImageIcon("img/"+name.substring(0,1)+".png"));
 
-            chess.setLocation(pos[0]*7,pos[1]*7);
+            chess.setLocation(pos[0]-19,pos[1]-19);
             chess.setSize(PIECE_WIDTH,PIECE_HEIGHT);
             chess.addMouseListener(new PieceMouseListener(name));
             pieceSets.put(name,chess);
@@ -90,6 +91,7 @@ public class BoardView {
 
 
         }
+
         Sequence = new String[board.pieceMap.size()];
         Sequence  = rules.sequence(board);
         nextMove = Sequence[order];
@@ -97,9 +99,14 @@ public class BoardView {
 
 
         int pos[] = piece.get(nextMove).position;
-        kuang.setLocation(pos[0]*7,pos[1]*7);
+        kuang.setLocation(pos[0]-19,pos[1]-19);
         kuang.setSize(40,40);
         pane.add(kuang,0);
+        MoveKuang = new JLabel(new ImageIcon("img/MVRANG.png"));
+        MoveKuang.setSize(100,100);
+        MoveKuang.setLocation(pos[0]-50,pos[1]-50);
+        pane.add(MoveKuang,1);
+
 
         frame.setResizable(false);
         frame.setVisible(true);
@@ -143,16 +150,18 @@ public class BoardView {
             if(selected==nextMove){//something is selected
                 //move on graph
                 int[] selectPosition = board.pieceMap.get(nextMove).position;
-                int[] pos1 = new int[]{e.getX()/7,e.getY()/7};
+                int[] pos1 = new int[]{e.getX(),e.getY()};
                 int[] pos2 = new int[]{e.getX(),e.getY()};
                 //update position in board
-                board.updatePosition(nextMove,pos1, order);
-                MoveChess(nextMove,pos2);
-                nextMove = Sequence[order];
+                if(pos1[0]-selectPosition[0]<=board.pieceMap.get(nextMove).MV*100&&pos1[1]-selectPosition[1]<=board.pieceMap.get(nextMove).MV*100){
+                    board.updatePosition(nextMove, pos1, order);
+                    MoveChess(nextMove, pos2);
+                    nextMove = Sequence[order];
 
-                int kuangPos[] = piece.get(nextMove).position;
-                kuang.setLocation(kuangPos[0]*7,kuangPos[1]*7);
-
+                    int kuangPos[] = piece.get(nextMove).position;
+                    kuang.setLocation(kuangPos[0] - 19, kuangPos[1] - 19);
+                    MoveKuang.setLocation(kuangPos[0] - 50, kuangPos[1] - 50);
+                }
 
             }
         }
