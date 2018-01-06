@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardView {
-    private final int WIDTH = 1440;
+    private final int WIDTH = 1460;
     private final int HEIGHT = 800;
     private final int PIECE_WIDTH = 38;
     private final int PIECE_HEIGHT = 38;
@@ -34,7 +34,8 @@ public class BoardView {
     private JPanel PROPERTY;
     public void init(final Board board){
         this.board = board;
-        BackGround = new JLabel(new ImageIcon("img/board.png"));
+        BackGround = new JLabel(new ImageIcon("SmartChess-master/img/board.png"));
+        BackGround.setLocation(0,0);
         frame= new JFrame("RPG Chess");
         pane = new JLayeredPane();
         Map<String, Piece> piece = board.pieceMap;
@@ -69,7 +70,7 @@ public class BoardView {
             String name = stringPieceEntry.getKey();
             Piece piece1 = stringPieceEntry.getValue();
             int[] pos = piece1.position;
-            JLabel chess = new JLabel(new ImageIcon("img/"+name.substring(0,1)+".png"));
+            JLabel chess = new JLabel(new ImageIcon("SmartChess-master/img/"+name.substring(0,1)+".png"));
             chess.setLocation(pos[0]*7,pos[1]*7);
             chess.setSize(PIECE_WIDTH,PIECE_HEIGHT);
             chess.addMouseListener(new PieceMouseListener(name));
@@ -135,7 +136,7 @@ public class BoardView {
 
     public void MoveChess(String name, int[] pos){
         JLabel piece = pieceSets.get(name);
-        piece.setLocation(pos[0],pos[1]);
+        piece.setLocation(pos[0]-19,pos[1]-19);
         selected=null;
     }
 
