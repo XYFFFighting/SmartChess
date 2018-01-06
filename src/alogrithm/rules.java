@@ -1,8 +1,12 @@
 package alogrithm;
 
-//chess[12][6] = {NUM, HP, SD, MV, RA, PO}; NUM: 1 - 12
+import chess.Board;
+import chess.Piece;
+
+import java.util.Map;
 
 public class rules {
+    private Board board;
     /*
     int a[];
     for(int i = 0; i < 12; i++){
@@ -86,4 +90,52 @@ public class rules {
     }
 }
 */
+    public String[] sequence(){
+        this.board = board;
+        Map<String, Piece> pieces = board.pieceMap;
+        String nameSet[] = new String[board.pieceMap.size()];
+        int i=0;
+        for(Map.Entry<String, Piece>stringPieceEntry : pieces.entrySet()){
+            nameSet[i]=stringPieceEntry.getKey();
+            i++;
+        }
+        //sort by index
+        int N = board.pieceMap.size();
+        for(i=0;i<N;i++){
+            for(int j=i;j>0;j--){
+                String index1 = nameSet[j].substring(1,nameSet[j].length());
+                String index2 = nameSet[j-1].substring(1,nameSet[j-1].length());
+
+                if(less(index1,index2))
+                    exch(nameSet,j,j-1);
+                else
+                    break;
+            }
+        }
+        //sort by SD
+        for(i=0;i<N;i++){
+            for(int j=i;j>0;j--){
+                int SD1 = board.pieceMap.get(nameSet[j]).SD;
+                int SD2 = board.pieceMap.get(nameSet[j-1]).SD;
+                if(less(SD1,SD2))
+                    exch(nameSet,j,j-1);
+                else
+                    break;
+            }
+        }
+        return nameSet;
+    }
+
+    private static boolean less(Comparable v, Comparable w){
+        return v.compareTo(w)<0;
+    }
+
+    private static void exch(Comparable[] a, int i, int j){
+        Comparable swap = a[i];
+        a[i] = a[j];
+        a[j] = swap;
+    }
+
+
+
     }
