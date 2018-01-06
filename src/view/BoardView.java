@@ -37,13 +37,17 @@ public class BoardView {
     private JPanel bottom;
     private JFrame property;
     private JPanel PROPERTY;
+    private JButton Skip;
+    private JLabel kuang;
+    private Map<String, Piece> piece;
     public void init(final Board board){
         this.board = board;
         BackGround = new JLabel(new ImageIcon("img/board.png"));
+        kuang = new JLabel(new ImageIcon("img/kuang.png"));
         BackGround.setLocation(0,0);
         frame= new JFrame("RPG Chess");
         pane = new JLayeredPane();
-        Map<String, Piece> piece = board.pieceMap;
+        piece = board.pieceMap;
 
         frame.setSize(WIDTH,HEIGHT);
         frame.setLocationRelativeTo(null);
@@ -58,11 +62,13 @@ public class BoardView {
         Move = new JButton("Move");
         Attack = new JButton("Attack");
         Property = new JButton("Property");
+        Skip  =new JButton("Skip");
         Property.addMouseListener(new ShowPropertyWindow());
 
         bottom.add(Move);
         bottom.add(Attack);
         bottom.add(Property);
+        bottom.add(Skip);
         bottom.setLocation(0,730);
         pane.add(bottom);
 
@@ -70,22 +76,31 @@ public class BoardView {
         BackGround.setLocation(0,0);
         BackGround.addMouseListener(new BackGroundMouseListener());
         pane.add(BackGround,1);
-
         for(Map.Entry<String, Piece>stringPieceEntry : piece.entrySet()){
             String name = stringPieceEntry.getKey();
             Piece piece1 = stringPieceEntry.getValue();
             int[] pos = piece1.position;
             JLabel chess = new JLabel(new ImageIcon("img/"+name.substring(0,1)+".png"));
+
             chess.setLocation(pos[0]*7,pos[1]*7);
             chess.setSize(PIECE_WIDTH,PIECE_HEIGHT);
             chess.addMouseListener(new PieceMouseListener(name));
             pieceSets.put(name,chess);
             pane.add(chess,0);
 
+
         }
         Sequence = new String[board.pieceMap.size()];
         Sequence  = rules.sequence(board);
         nextMove = Sequence[order];
+        board.player = Sequence[order].charAt(0);
+
+
+        int pos[] = piece.get(nextMove).position;
+        kuang.setLocation(pos[0]*7,pos[1]*7);
+        kuang.setSize(40,40);
+        pane.add(kuang,0);
+
         frame.setResizable(false);
         frame.setVisible(true);
     }
@@ -128,12 +143,15 @@ public class BoardView {
             if(selected==nextMove){//something is selected
                 //move on graph
                 int[] selectPosition = board.pieceMap.get(nextMove).position;
-                int[] pos = new int[]{e.getX(),e.getY()};
+                int[] pos1 = new int[]{e.getX()/7,e.getY()/7};
+                int[] pos2 = new int[]{e.getX(),e.getY()};
                 //update position in board
-                board.updatePosition(nextMove,pos, order);
-                MoveChess(nextMove,pos);
+                board.updatePosition(nextMove,pos1, order);
+                MoveChess(nextMove,pos2);
                 nextMove = Sequence[order];
 
+                int kuangPos[] = piece.get(nextMove).position;
+                kuang.setLocation(kuangPos[0]*7,kuangPos[1]*7);
 
 
             }

@@ -118,8 +118,8 @@ public class rules {
             for(int j=i;j>0;j--){
                 int SD1 = board.pieceMap.get(nameSet[j]).SD;
                 int SD2 = board.pieceMap.get(nameSet[j-1]).SD;
-                if(less(SD1,SD2))
-                    exch(nameSet,j,j-1);
+                if(less(SD2,SD1))
+                    exch(nameSet,j-1,j);
                 else
                     break;
             }
