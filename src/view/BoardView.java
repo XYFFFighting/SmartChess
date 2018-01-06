@@ -1,5 +1,6 @@
 package view;
 
+import alogrithm.rules;
 import chess.Board;
 import chess.Piece;
 import control.ChessController;
@@ -17,12 +18,16 @@ public class BoardView {
     private final int PIECE_WIDTH = 38;
     private final int PIECE_HEIGHT = 38;
     private ChessController controller;
+    private rules rules = new rules();
     private Board board;
     private JLayeredPane pane;
     private Map<String, JLabel> pieceSets = new HashMap<String, JLabel>();
     private JFrame frame;
     private JLabel BackGround;
     private String selected;
+    public String nextMove;
+    public String Sequence[];
+    public int order = 0;
     public BoardView(ChessController chessController){
         this.controller = chessController;
     }
@@ -34,7 +39,7 @@ public class BoardView {
     private JPanel PROPERTY;
     public void init(final Board board){
         this.board = board;
-        BackGround = new JLabel(new ImageIcon("SmartChess-master/img/board.png"));
+        BackGround = new JLabel(new ImageIcon("img/board.png"));
         BackGround.setLocation(0,0);
         frame= new JFrame("RPG Chess");
         pane = new JLayeredPane();
@@ -70,7 +75,7 @@ public class BoardView {
             String name = stringPieceEntry.getKey();
             Piece piece1 = stringPieceEntry.getValue();
             int[] pos = piece1.position;
-            JLabel chess = new JLabel(new ImageIcon("SmartChess-master/img/"+name.substring(0,1)+".png"));
+            JLabel chess = new JLabel(new ImageIcon("img/"+name.substring(0,1)+".png"));
             chess.setLocation(pos[0]*7,pos[1]*7);
             chess.setSize(PIECE_WIDTH,PIECE_HEIGHT);
             chess.addMouseListener(new PieceMouseListener(name));
@@ -78,9 +83,9 @@ public class BoardView {
             pane.add(chess,0);
 
         }
-
-
-
+        Sequence = new String[board.pieceMap.size()];
+        Sequence  = rules.sequence(board);
+        nextMove = Sequence[order];
         frame.setResizable(false);
         frame.setVisible(true);
     }
@@ -120,13 +125,14 @@ public class BoardView {
         public void mousePressed(MouseEvent e) {
             //super.mousePressed(e);
             //System.out.println(e.getX() + " " + e.getY());
-            if(selected!=null){//something is selected
+            if(selected==nextMove){//something is selected
                 //move on graph
-                int[] selectPosition = board.pieceMap.get(selected).position;
+                int[] selectPosition = board.pieceMap.get(nextMove).position;
                 int[] pos = new int[]{e.getX(),e.getY()};
                 //update position in board
-                board.updatePosition(selected,pos);
-                MoveChess(selected,pos);
+                board.updatePosition(nextMove,pos, order);
+                MoveChess(nextMove,pos);
+                nextMove = Sequence[order];
 
 
 

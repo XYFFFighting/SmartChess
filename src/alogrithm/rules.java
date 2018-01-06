@@ -2,6 +2,7 @@ package alogrithm;
 
 import chess.Board;
 import chess.Piece;
+import javafx.util.Pair;
 
 import java.util.Map;
 
@@ -90,7 +91,7 @@ public class rules {
     }
 }
 */
-    public String[] sequence(){
+    public String[] sequence(Board board){
         this.board = board;
         Map<String, Piece> pieces = board.pieceMap;
         String nameSet[] = new String[board.pieceMap.size()];
@@ -103,8 +104,8 @@ public class rules {
         int N = board.pieceMap.size();
         for(i=0;i<N;i++){
             for(int j=i;j>0;j--){
-                String index1 = nameSet[j].substring(1,nameSet[j].length());
-                String index2 = nameSet[j-1].substring(1,nameSet[j-1].length());
+                int index1 = Integer.parseInt(nameSet[j].substring(1,nameSet[j].length()));
+                int index2 = Integer.parseInt(nameSet[j-1].substring(1,nameSet[j-1].length()));
 
                 if(less(index1,index2))
                     exch(nameSet,j,j-1);
@@ -123,6 +124,7 @@ public class rules {
                     break;
             }
         }
+
         return nameSet;
     }
 

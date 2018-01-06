@@ -1,5 +1,7 @@
 package chess;
 
+import view.BoardView;
+
 import java.util.Map;
 
 public class Board {
@@ -7,6 +9,7 @@ public class Board {
     public int BOARD_HEIGHT=101;//100
     public Map<String, Piece> pieceMap;
     public char player='R';
+    public BoardView boardView;
     private Piece[][] chessBoard = new Piece[BOARD_WIDTH][BOARD_HEIGHT];
 
     public boolean isInside(int x, int y){
@@ -25,17 +28,19 @@ public class Board {
         return chessBoard[x][y];
     }
 
-    public void updatePosition(String name, int[] pos){
+    public void updatePosition(String name, int[] pos, int order){
         Piece oldPiece = pieceMap.get(name);
         oldPiece.position = pos;
         pieceMap.remove(name);
         pieceMap.put(name, oldPiece);
         //need to check if kill some chess here
         //change next move
-        if(player=='R')
-            player='B';
+        if(order!=11)
+            boardView.order = order+1;
         else
-            player='R';
+            boardView.order = 0;
+
+        player=boardView.Sequence[boardView.order].charAt(0);
 
     }
 

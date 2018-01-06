@@ -11,7 +11,9 @@ public class GameMain {
         controller = new ChessController();
         board = controller.init();
         view = new BoardView(controller);
+        board.boardView = view;
         view.init(board);
+
     }
 
     public void run(){
