@@ -5,9 +5,9 @@ public class Piece {
     public int[] position = new int[2];
     public int HP=100;//health
     public int SD=10;//speed
-    public int RG=1;//range
+    public int RG=4;//range
     public int PW=1;//power
-    public int MV=1;//Movement
+    public int MV=5;//Movement
     public char index;
     public Piece(String name, int[] position){
         /*
@@ -17,27 +17,28 @@ public class Piece {
         this.index = name.charAt(1);
         this.position=position;
 
+
     }
 
-    public void setHP(int HP){
-        this.HP = HP;
+    public void addHP(int HP){
+        this.HP += HP;
     }
 
-    public void setSD(int SD){
-        this.SD= SD;
+    public void addSD(int SD){
+        this.SD += SD;
     }
 
-    public void setRG(int RG){
-        this.RG = RG;
+    public void addRG(int RG){
+        this.RG += RG;
     }
 
-    public void setPW(int PW){
-        this.PW = PW;
+    public void addPW(int PW){
+        this.PW += PW;
     }
 
-    public void setMV(int MV)
+    public void addMV(int MV)
     {
-        this.MV = MV;
+        this.MV += MV;
     }
 
 }
