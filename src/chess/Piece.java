@@ -6,7 +6,7 @@ public class Piece {
     public int HP=100;//health
     public int SD=10;//speed
     public int RG=4;//range
-    public int PW=1;//power
+    public int PW=5;//power
     public int MV=5;//Movement
     public char index;
     public Piece(String name, int[] position){

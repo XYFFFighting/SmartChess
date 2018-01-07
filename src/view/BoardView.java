@@ -253,7 +253,7 @@ public class BoardView {
             }
 
             System.out.println(name);
-            if (selected == nextMove && mode == 1) {
+            if (selected != nextMove && mode == 1) {
                 //attack mode
                 //check range if out of range do nothing
                 System.out.println("in range");
@@ -267,6 +267,10 @@ public class BoardView {
                     //if(!name.equals(selected)) {
 
                     tpiece.HP -= board.pieceMap.get(nextMove).PW * 10;
+                    if(tpiece.HP<=0){
+                        pane.remove(pieceSets.get(name));
+                        pieceSets.remove(name);
+                    }
                     //skip
                     board.updatePosition(nextMove, board.pieceMap.get(nextMove).position, order);
                     MoveChess(nextMove, board.pieceMap.get(nextMove).position);
